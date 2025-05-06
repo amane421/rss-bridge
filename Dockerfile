@@ -12,8 +12,8 @@ WORKDIR /app
 # Clone RSS-Bridge
 RUN git clone https://github.com/RSS-Bridge/rss-bridge.git .
 
-# Make cache and whitelist folders writable
-RUN chmod -R 777 ./cache ./whitelist.txt
+# Make cache and whitelist folders writable (skip whitelist.txt if missing)
+RUN chmod -R 777 ./cache && [ -f ./whitelist.txt ] && chmod 777 ./whitelist.txt || true
 
 # Expose port (Render uses PORT env var internally)
 EXPOSE 80
